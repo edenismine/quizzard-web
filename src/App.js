@@ -1,18 +1,24 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Exams from "./components/Exams";
+import axios from "axios";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { exams: [] };
+  }
+
+  componentDidMount() {
+    axios.get("/api/exam").then(res => {
+      this.setState({ exams: res.data });
+    });
+  }
+
   render() {
-    return (
-      <div>
-        <header>
-          <h1>Welcome to React</h1>
-        </header>
-        <p>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+    return <div className="container pt-3">
+      <Exams exams={this.state.exams} />
+    </div>  ;
   }
 }
 
